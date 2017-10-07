@@ -5,6 +5,10 @@
 	<artifactId>rebatis</artifactId>
 	<version>0.0.1</version>
 
+	<name>ReBatis</name>
+	<description>Generic mybatis mapper interface without write SQL yourself</description>
+	<url>http://www.lihongkun.com/rebatis.html</url>
+
 	<properties>
 		<spring.version>4.3.9.RELEASE</spring.version>
 	</properties>
