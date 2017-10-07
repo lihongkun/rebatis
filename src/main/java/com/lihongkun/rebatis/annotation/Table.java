@@ -10,9 +10,7 @@ import java.lang.annotation.Target;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Mybatis Mapper Entity
- * MybatisMapperSqlSessionFactoryBean 启动的时候扫描此注解的实体
- * 进行MappedStatement的注册
+ * 表名注解
  * 
  * @author lihongkun
  */

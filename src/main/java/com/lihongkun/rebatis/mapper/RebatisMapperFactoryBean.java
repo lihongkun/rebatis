@@ -10,6 +10,14 @@ import org.apache.ibatis.session.Configuration;
 
 import com.lihongkun.rebatis.statement.MappedStatementRegistryComposite;
 
+/**
+ * MapperFactoryBean 扩展类,重新定义mapper接口的代理类
+ * 
+ * 1. 注册接口类
+ * 2. 注解接口代理类对应的SQL,即BaseMapper中的方法
+ * 
+ * @author lihongkun
+ */
 public class RebatisMapperFactoryBean<T> extends org.mybatis.spring.mapper.MapperFactoryBean<T> {
 
 	public RebatisMapperFactoryBean() {
