@@ -1,6 +1,6 @@
 ## 功能简介
-- 类似JPA(Hibernate),使用实体注解,自动注册SQL.
-- 实现通用的Mapper接口和SQL注册,无代码生成.
+- 类似JPA(Hibernate),使用实体注解.
+- 实现通用的Mapper接口及其SQL注册,无代码生成.
 - 对Mybatis使用无任何侵入,Mybatis原有的使用方式可继续使用.
 
 ## 开始使用
