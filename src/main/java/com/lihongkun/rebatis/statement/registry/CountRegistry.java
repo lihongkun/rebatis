@@ -43,6 +43,6 @@ public class CountRegistry extends GenericMappedStatementRegistry {
 	}
 
 	public Class<?> getResultType() {
-		return Integer.class;
+		return Long.class;
 	}
 }
