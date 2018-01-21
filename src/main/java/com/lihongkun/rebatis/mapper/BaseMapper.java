@@ -19,13 +19,6 @@ public interface BaseMapper<T,ID>  {
 	<S extends T> int insert(S entity);
 
 	/**
-	 * 新增全部
-	 * @param entities	新增的实体类列表
-	 * @return			成功数量
-	 */
-	<S extends T> int insertAll(List<S> entities);
-
-	/**
 	 * 根据主键判断是否存在
 	 * @param id		主键值
 	 * @return			true - 存在,false - 不存在
