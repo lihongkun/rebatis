@@ -23,7 +23,6 @@ import com.lihongkun.rebatis.statement.registry.ExistsByIdRegistry;
 import com.lihongkun.rebatis.statement.registry.FindAllByIdRegistry;
 import com.lihongkun.rebatis.statement.registry.FindAllRegistry;
 import com.lihongkun.rebatis.statement.registry.FindByIdRegistry;
-import com.lihongkun.rebatis.statement.registry.InsertAllRegistry;
 import com.lihongkun.rebatis.statement.registry.InsertRegistry;
 import com.lihongkun.rebatis.statement.registry.UpdateByIdRegisty;
 import com.lihongkun.rebatis.util.StringUtils;
@@ -109,7 +108,6 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 		mappedStatementRegistrys.add(new FindAllByIdRegistry(registryArgs));
 		mappedStatementRegistrys.add(new FindAllRegistry(registryArgs));
 		mappedStatementRegistrys.add(new FindByIdRegistry(registryArgs));
-		mappedStatementRegistrys.add(new InsertAllRegistry(registryArgs));
 		mappedStatementRegistrys.add(new InsertRegistry(registryArgs));
 		mappedStatementRegistrys.add(new UpdateByIdRegisty(registryArgs));
 		
