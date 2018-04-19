@@ -58,14 +58,32 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 		this.languageDriver = configuration.getDefaultScriptingLanguageInstance();
 	}
 	
+	/**
+	 * java Bean 属性名称转换成对应的DB字段名称
+	 * @param field
+	 * @return
+	 */
 	protected String getColumnNameByField(Field field){
 		return StringUtils.camelToUnderScore(field.getName());
 	}
 	
+	/**
+	 * mybatis 判断Bean属性是否为空表达式
+	 * @param field
+	 * @return
+	 */
 	protected String getTestByField(Field field) {
 		return field.getName() + "!= null";
 	}
 	
+	/**
+	 * 生成 mybatis 的 where语句 片段
+	 * <where>
+	 * 		<if test=" someField1 != null"> and some_field1 = #{someField1} </if>
+	 * 		<if test=" someField2 != null"> and some_field2 = #{someField2} </if>
+	 * </where>
+	 * @return
+	 */
 	protected WhereSqlNode getWhereStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
 		contents.add(new IfSqlNode(new TextSqlNode(" AND "+ getColumnNameByField(idField) + " = #{"+idField.getName()+"}"), getTestByField(idField)));
@@ -75,6 +93,14 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 		return new WhereSqlNode(configuration, new MixedSqlNode(contents));
 	}
 	
+	/**
+	 * 生成mybatis 的 更新语句片段
+	 * <set>
+	 * 		<if test=" someField1 != null"> some_field1 = #{someField1} </if>
+	 * 		<if test=" someField2 != null"> some_field2 = #{someField2} </if>
+	 * </set>
+	 * @return
+	 */
 	protected SetSqlNode getUpdateSetStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
 		for(Field field : columnFields){
@@ -83,6 +109,17 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 		return new SetSqlNode(configuration, new MixedSqlNode(contents));
 	} 
 	
+	/**
+	 * 生成mybatis 插入语句声明字段片段
+	 * [insert into table]
+	 * (
+	 * 		<if test=" someField1 != null">some_field1</if>,
+	 * 		<if test=" someField2 != null">some_field2</if>,
+	 * 		<if test=" someField3 != null">some_field3</if>
+	 * )
+	 * 
+	 * @return
+	 */
 	protected TrimSqlNode getInsertColumnStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
 		
@@ -99,6 +136,17 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 		return new TrimSqlNode(configuration, new MixedSqlNode(contents), "(", null, ")", ",");
 	}
 	
+	/**
+	 * 生成mybatis 插入语句片段
+	 * 
+	 * values (
+	 * 		<if test=" someField1 != null">#{someField1}</if>,
+	 * 		<if test=" someField2 != null">#{someField2}</if>,
+	 * 		<if test=" someField3 != null">#{someField3}</if>
+	 * )
+	 * 
+	 * @return
+	 */
 	public TrimSqlNode getInsertFieldsStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
 		

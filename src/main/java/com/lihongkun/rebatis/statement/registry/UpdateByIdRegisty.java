@@ -15,6 +15,18 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据ID更新
+ * 
+ * update [tableName]
+ * <set>
+ * 		<if test=" someField1 != null"> some_field1 = #{someField1} </if>
+ * 		<if test=" someField2 != null"> some_field2 = #{someField2} </if>
+ * </set>
+ * where [id] = #{id}
+ * 
+ * @author lihongkun
+ */
 public class UpdateByIdRegisty extends GenericMappedStatementRegistry {
 
 	public UpdateByIdRegisty(RegistryArgs args) {

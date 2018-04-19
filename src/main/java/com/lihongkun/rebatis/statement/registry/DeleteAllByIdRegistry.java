@@ -17,6 +17,17 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据记录ID批量删除
+ * 
+ * delete from [tableName]
+ * where [id] in 
+ * <foreach collection="list" item="item" index="index" open="(" close=")" seperate=",">
+ * 	#{item}
+ * </foreach>
+ * 
+ * @author lihongkun
+ */
 public class DeleteAllByIdRegistry extends GenericMappedStatementRegistry {
 
 	public DeleteAllByIdRegistry(RegistryArgs args) {
@@ -37,7 +48,7 @@ public class DeleteAllByIdRegistry extends GenericMappedStatementRegistry {
 		contents.add(new TextSqlNode(" delete from "+tableName));
 		
 		List<SqlNode> whereStatment = new ArrayList<>();
-		whereStatment.add(new TextSqlNode(" where id in "));
+		whereStatment.add(new TextSqlNode(" where "+getColumnNameByField(idField)+" in "));
 		whereStatment.add(new ForEachSqlNode(configuration, new TextSqlNode("#{item}"), "list", "index", "item", "(", ")", ","));
 		
 		contents.add(new IfSqlNode(new MixedSqlNode(whereStatment), "list != null "));

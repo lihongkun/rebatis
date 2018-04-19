@@ -10,6 +10,15 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 
+ * 根据记录ID删除单条记录
+ * 
+ * delete from [tableName]
+ * where [id] = #{id}
+ * 
+ * @author lihongkun
+ */
 public class DeleteByIdRegistry extends GenericMappedStatementRegistry {
 
 	public DeleteByIdRegistry(RegistryArgs args) {

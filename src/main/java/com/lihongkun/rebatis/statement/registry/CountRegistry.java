@@ -15,6 +15,17 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * count 语句
+ * 
+ * select count(1) from [tableName]
+ * <where>
+ * 		<if test="a != null"> and a = #{a}</if>
+ * 		<if test="b != null"> and b = #{b}</if>
+ * </where>
+ * 
+ * @author lihongkun
+ */
 public class CountRegistry extends GenericMappedStatementRegistry {
 
 	public CountRegistry(RegistryArgs args) {

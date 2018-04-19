@@ -15,6 +15,18 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据条件删除
+ * 
+ * delete from [tableName]
+ * <where>
+ * 		<if test="a != null"> and a = #{a}</if>
+ * 		<if test="b != null"> and b = #{b}</if>
+ * </where>
+ * 
+ * 
+ * @author lihongkun
+ */
 public class DeleteRegistry extends GenericMappedStatementRegistry {
 
 	public DeleteRegistry(RegistryArgs args) {

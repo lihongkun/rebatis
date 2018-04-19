@@ -10,6 +10,13 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据ID判断记录是否存在
+ * 
+ * select count(1) from [tableName] where [id] = #{id}
+ * 
+ * @author lihongkun
+ */
 public class ExistsByIdRegistry extends GenericMappedStatementRegistry {
 
 	public ExistsByIdRegistry(RegistryArgs args) {

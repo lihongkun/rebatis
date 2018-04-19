@@ -18,6 +18,17 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据ID列表查询记录
+ * 
+ * select [all fields] from [tableName]
+ * where [id] in 
+ * <foreach collection="list" item="item" index="index" open="(" close=")" seperate=",">
+ * 	#{item}
+ * </foreach>
+ * 
+ * @author lihongkun
+ */
 public class FindAllByIdRegistry extends GenericMappedStatementRegistry {
 
 	public FindAllByIdRegistry(RegistryArgs args) {
@@ -48,7 +59,7 @@ public class FindAllByIdRegistry extends GenericMappedStatementRegistry {
 		
 		List<SqlNode> whereStatment = new ArrayList<>();
 		
-		whereStatment.add(new TextSqlNode(" where id in "));
+		whereStatment.add(new TextSqlNode(" where "+getColumnNameByField(idField)+" in "));
 		whereStatment.add(new ForEachSqlNode(configuration, new TextSqlNode("#{item}"), "list", "index", "item", "(", ")", ","));
 		
 		contents.add(new IfSqlNode(new MixedSqlNode(whereStatment), "list != null "));

@@ -12,6 +12,14 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
+/**
+ * 根据ID查询
+ * 
+ * select [all fields] from [tableName]
+ * where [id] = #{id}
+ * 
+ * @author lihongkun
+ */
 public class FindByIdRegistry extends GenericMappedStatementRegistry {
 
 	public FindByIdRegistry(RegistryArgs args) {
