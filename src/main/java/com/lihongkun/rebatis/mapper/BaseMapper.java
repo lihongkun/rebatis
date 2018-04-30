@@ -16,7 +16,7 @@ public interface BaseMapper<T,ID>  {
 	 * @param entity	新增的实体类
 	 * @return			成功数量
 	 */
-	<S extends T> int insert(S entity);
+	int insert(T entity);
 
 	/**
 	 * 根据主键判断是否存在
@@ -34,7 +34,8 @@ public interface BaseMapper<T,ID>  {
 	
 	/**
 	 * 查询
-	 * @param entity	查询条件		
+	 * @param entity	查询条件	
+	 * @param rowBounds 分页参数
 	 * @return			查询结果实体类列表
 	 */
 	List<T> findAll(T entity,RowBounds rowBounds);

@@ -12,11 +12,11 @@ import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
  * 
- * 根据记录ID删除单条记录
- * 
- * delete from [tableName]
+ * <p>根据记录ID删除单条记录</p>
+ * <pre>
+ * delete from [tableName] 
  * where [id] = #{id}
- * 
+ * </pre>
  * @author lihongkun
  */
 public class DeleteByIdRegistry extends GenericMappedStatementRegistry {

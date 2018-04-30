@@ -19,14 +19,14 @@ import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
- * 根据ID列表查询记录
- * 
- * select [all fields] from [tableName]
- * where [id] in 
- * <foreach collection="list" item="item" index="index" open="(" close=")" seperate=",">
- * 	#{item}
- * </foreach>
- * 
+ * <p>根据ID列表查询记录</p>
+ * <pre>
+ * select [all fields] from [tableName] 
+ * where [id] in  
+ * &lt;foreach collection="list" item="item" index="index" open="(" close=")" seperate="," &gt;
+ * 	#{item} 
+ * &lt;/foreach&gt; 
+ * </pre>
  * @author lihongkun
  */
 public class FindAllByIdRegistry extends GenericMappedStatementRegistry {

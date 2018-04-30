@@ -1,6 +1,7 @@
 package com.lihongkun.rebatis.interceptor;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -87,25 +88,33 @@ public class ShowSqlInterceptor implements Interceptor {
 		Object parameterObject = boundSql.getParameterObject();
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
 		String sql = StringUtils.replaceAll(boundSql.getSql(), "[\\s]+", " ");
+		
+		sql = StringUtils.replaceAll(sql,"\\?","%s");
+		List<Object> params = new ArrayList<>();
+		
 		if (parameterMappings.size() > 0 && parameterObject != null) {
 			TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
 			if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
-				sql = StringUtils.replaceFirst(sql, "\\?", getParameterValue(parameterObject));
-
+				params.add(getParameterValue(parameterObject));
 			} else {
 				MetaObject metaObject = configuration.newMetaObject(parameterObject);
 				for (ParameterMapping parameterMapping : parameterMappings) {
 					String propertyName = parameterMapping.getProperty();
 					if (metaObject.hasGetter(propertyName)) {
 						Object obj = metaObject.getValue(propertyName);
-						sql = StringUtils.replaceFirst(sql, "\\?", getParameterValue(obj));
+						params.add(getParameterValue(obj));
 					} else if (boundSql.hasAdditionalParameter(propertyName)) {
 						Object obj = boundSql.getAdditionalParameter(propertyName);
-						sql = StringUtils.replaceFirst(sql, "\\?", getParameterValue(obj));
+						params.add(getParameterValue(obj));
 					}
 				}
 			}
 		}
+		
+		if(params.size() > 0){
+			sql = String.format(sql, params.toArray());
+		}
+		
 		return sql;
 	}
 

@@ -14,10 +14,10 @@ import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
  * 根据ID查询
- * 
+ * <pre>
  * select [all fields] from [tableName]
  * where [id] = #{id}
- * 
+ * </pre>
  * @author lihongkun
  */
 public class FindByIdRegistry extends GenericMappedStatementRegistry {

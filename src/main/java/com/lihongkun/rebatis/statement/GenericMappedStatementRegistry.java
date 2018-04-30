@@ -60,8 +60,8 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * java Bean 属性名称转换成对应的DB字段名称
-	 * @param field
-	 * @return
+	 * @param field java bean 属性
+	 * @return 对应的数据库字段名称
 	 */
 	protected String getColumnNameByField(Field field){
 		return StringUtils.camelToUnderScore(field.getName());
@@ -69,8 +69,8 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * mybatis 判断Bean属性是否为空表达式
-	 * @param field
-	 * @return
+	 * @param field  java bean 属性
+	 * @return field 对应的 测试表达式
 	 */
 	protected String getTestByField(Field field) {
 		return field.getName() + "!= null";
@@ -78,11 +78,13 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * 生成 mybatis 的 where语句 片段
-	 * <where>
-	 * 		<if test=" someField1 != null"> and some_field1 = #{someField1} </if>
-	 * 		<if test=" someField2 != null"> and some_field2 = #{someField2} </if>
-	 * </where>
-	 * @return
+	 * <pre>
+	 * &lt;where&gt;
+	 * 		&lt;if test=" someField1 != null "&gt; and some_field1 = #{someField1} &lt;/if&gt;
+	 * 		&lt;if test=" someField2 != null "&gt; and some_field2 = #{someField2} &lt;/if&gt;
+	 * &lt;/where&gt;
+	 * </pre>
+	 * @return where子句
 	 */
 	protected WhereSqlNode getWhereStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
@@ -95,11 +97,13 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * 生成mybatis 的 更新语句片段
-	 * <set>
-	 * 		<if test=" someField1 != null"> some_field1 = #{someField1} </if>
-	 * 		<if test=" someField2 != null"> some_field2 = #{someField2} </if>
-	 * </set>
-	 * @return
+	 * <pre>
+	 * &lt;set&gt;
+	 * 	&lt;if test=" someField1 != null "&gt; some_field1 = #{someField1} ,&lt;/if&gt;
+	 * 	&lt;if test=" someField2 != null "&gt; some_field2 = #{someField2} ,&lt;/if&gt;
+	 * &lt;/set&gt;
+	 * </pre>
+	 * @return 更新子句
 	 */
 	protected SetSqlNode getUpdateSetStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
@@ -111,14 +115,15 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * 生成mybatis 插入语句声明字段片段
+	 * <pre>
 	 * [insert into table]
 	 * (
-	 * 		<if test=" someField1 != null">some_field1</if>,
-	 * 		<if test=" someField2 != null">some_field2</if>,
-	 * 		<if test=" someField3 != null">some_field3</if>
+	 *	&lt;if test=" someField1 != null "&gt;some_field1 &lt;/if&gt;,
+	 * 	&lt;if test=" someField2 != null "&gt;some_field2 &lt;/if&gt;,
+	 * 	&lt;if test=" someField3 != null "&gt;some_field3 &lt;/if&gt;
 	 * )
-	 * 
-	 * @return
+	 * </pre>
+	 * @return insert 声明片段
 	 */
 	protected TrimSqlNode getInsertColumnStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
@@ -138,14 +143,14 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	
 	/**
 	 * 生成mybatis 插入语句片段
-	 * 
+	 * <pre>
 	 * values (
-	 * 		<if test=" someField1 != null">#{someField1}</if>,
-	 * 		<if test=" someField2 != null">#{someField2}</if>,
-	 * 		<if test=" someField3 != null">#{someField3}</if>
+	 * 	&lt;if test=" someField1 != null "&gt;#{someField1}&lt;/if&gt;,
+	 * 	&lt;if test=" someField2 != null "&gt;#{someField2}&lt;/if&gt;,
+	 * 	&lt;if test=" someField3 != null "&gt;#{someField3}&lt;/if&gt;
 	 * )
-	 * 
-	 * @return
+	 * </pre>
+	 * @return insert值片段
 	 */
 	public TrimSqlNode getInsertFieldsStatement(){
 		List<SqlNode> contents = new ArrayList<SqlNode>();
@@ -159,27 +164,27 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	}
 	
 	/**
-	 * SQLID
+	 * @return SQLID
 	 */
 	public abstract String getStatementId();
 	
 	/**
-	 * SQL操作类型
+	 * @return SQL操作类型
 	 */
 	public abstract SqlCommandType getSqlCommandType();
 	
 	/**
-	 * SQL源
+	 * @return SQL源
 	 */
 	public abstract SqlSource getSqlSource();
 	
 	/**
-	 * 主键生成策略
+	 * @return 主键生成策略
 	 */
 	public abstract KeyGenerator getKeyGenerator();
 	
 	/**
-	 * 返回类型
+	 * @return 返回类型
 	 */
 	public abstract Class<?> getResultType();
 	

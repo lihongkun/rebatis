@@ -12,20 +12,20 @@ import org.apache.ibatis.scripting.xmltags.TextSqlNode;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
- * 新增语句
- * 
- * insert into [tableName]
- * (
- * 		<if test=" someField1 != null">some_field1</if>,
- * 		<if test=" someField2 != null">some_field2</if>,
- * 		<if test=" someField3 != null">some_field3</if>
- * )
- * values (
- * 		<if test=" someField1 != null">#{someField1}</if>,
- * 		<if test=" someField2 != null">#{someField2}</if>,
- * 		<if test=" someField3 != null">#{someField3}</if>
- * )
- * 
+ * <p>新增语句</p>
+ * <pre>
+ * insert into [tableName] 
+ * ( 
+ * 		&lt;if test=" someField1 != null"&gt;some_field1&lt;/if&gt;, 
+ * 		&lt;if test=" someField2 != null"&gt;some_field2&lt;/if&gt;, 
+ * 		&lt;if test=" someField3 != null"&gt;some_field3&lt;/if&gt; 
+ * ) 
+ * values ( 
+ * 		&lt;if test=" someField1 != null"&gt;#{someField1}&lt;/if&gt;, 
+ * 		&lt;if test=" someField2 != null"&gt;#{someField2}&lt;/if&gt;, 
+ * 		&lt;if test=" someField3 != null"&gt;#{someField3}&lt;/if&gt; 
+ * ) 
+ * </pre>
  * @author lihongkun
  */
 public class InsertRegistry extends GenericInsertRegistry {

@@ -16,14 +16,15 @@ import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
- * 根据条件删除
+ * <p>根据条件删除</p>
  * 
- * delete from [tableName]
- * <where>
- * 		<if test="a != null"> and a = #{a}</if>
- * 		<if test="b != null"> and b = #{b}</if>
- * </where>
- * 
+ * <pre>
+ * delete from [tableName] 
+ * &lt;where&gt;
+ * 	&lt;if test="a != null"&gt; and a = #{a} &lt;/if&gt;
+ * 	&lt;if test="b != null"&gt; and b = #{b} &lt;/if&gt;
+ * &lt;/where&gt;
+ * </pre>
  * 
  * @author lihongkun
  */

@@ -18,14 +18,14 @@ import com.lihongkun.rebatis.statement.GenericMappedStatementRegistry;
 import com.lihongkun.rebatis.statement.RegistryArgs;
 
 /**
- * 根据记录ID批量删除
- * 
- * delete from [tableName]
- * where [id] in 
- * <foreach collection="list" item="item" index="index" open="(" close=")" seperate=",">
- * 	#{item}
- * </foreach>
- * 
+ * <p>根据记录ID批量删除 </p>
+ * <pre>
+ * delete from [tableName] 
+ * where [id] in  
+ * &lt;foreach collection="list" item="item" index="index" open="(" close=")" seperate=","&gt;
+ * 	#{item} 
+ * &lt;/foreach&gt;
+ * </pre>
  * @author lihongkun
  */
 public class DeleteAllByIdRegistry extends GenericMappedStatementRegistry {

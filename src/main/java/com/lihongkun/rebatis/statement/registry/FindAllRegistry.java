@@ -19,13 +19,13 @@ import com.lihongkun.rebatis.statement.RegistryArgs;
 /**
  * 
  * 根据条件查询列表
- * 
+ * <pre>
  * select [all fields] from [tableName]
- * <where>
- * 		<if test="a != null"> and a = #{a}</if>
- * 		<if test="b != null"> and b = #{b}</if>
- * </where>
- * 
+ * &lt;where&gt;
+ * 	&lt;if test="a != null"&gt; and a = #{a} &lt;if&gt;
+ * 	&lt;if test="b != null"&gt; and b = #{b} &lt;if&gt;
+ * &lt;/where&gt;
+ * </pre>
  * 
  * @author lihongkun
  */
