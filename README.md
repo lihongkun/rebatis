@@ -53,3 +53,10 @@ public class MybatisConfiguration {
 
 }
 ```
+## 测试用例
+
+源码目录下的RebatisTest可以直接运行.使用了内存数据库h2
+
+## 原理
+
+主要扩展了MapperFactoryBean的RebatisMapperFactoryBean在执行原有的扫描Mapper接口注册到Mybatis之前,进行对应的MapperStatement的注册达到了不用自己手写SQL的目的.
