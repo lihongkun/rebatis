@@ -3,7 +3,7 @@ package com.lihongkun.rebatis.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public class ReflectionUtils {
+public class ReflectionUtil {
 
 	/**
 	 * 查找类中,拥有某个注解的字段,如果不存在返回空

@@ -25,6 +25,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.lihongkun.rebatis.util.StringUtil;
+
 @Intercepts({ 
 	@Signature(method = "update", type = Executor.class, args = { MappedStatement.class, Object.class }),
 	@Signature(method = "query", type = Executor.class, args = { MappedStatement.class, Object.class,RowBounds.class, ResultHandler.class })
@@ -89,7 +91,6 @@ public class ShowSqlInterceptor implements Interceptor {
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
 		String sql = StringUtils.replaceAll(boundSql.getSql(), "[\\s]+", " ");
 		
-		sql = StringUtils.replaceAll(sql,"\\?","%s");
 		List<Object> params = new ArrayList<>();
 		
 		if (parameterMappings.size() > 0 && parameterObject != null) {
@@ -112,7 +113,7 @@ public class ShowSqlInterceptor implements Interceptor {
 		}
 		
 		if(params.size() > 0){
-			sql = String.format(sql, params.toArray());
+			sql = StringUtil.replace(sql, "?", params.toArray());
 		}
 		
 		return sql;

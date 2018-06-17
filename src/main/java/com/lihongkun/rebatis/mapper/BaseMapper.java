@@ -2,7 +2,8 @@ package com.lihongkun.rebatis.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import com.lihongkun.rebatis.pagination.Pagination;
+import com.lihongkun.rebatis.pagination.Paginator;
 
 /**
  * 通用Mapper接口,定义额基础的数据库操作.
@@ -38,7 +39,7 @@ public interface BaseMapper<T,ID>  {
 	 * @param rowBounds 分页参数
 	 * @return			查询结果实体类列表
 	 */
-	List<T> findAll(T entity,RowBounds rowBounds);
+	Pagination<T> findAll(T entity,Paginator paginator);
 
 	/**
 	 * 根据id列表查询

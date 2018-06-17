@@ -2,7 +2,6 @@ package com.lihongkun.rebatis.test;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,12 +11,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.lihongkun.rebatis.interceptor.ShowSqlInterceptor;
-import com.lihongkun.rebatis.mapper.RebatisMapperFactoryBean;
+import com.lihongkun.rebatis.proxy.RebatisConfiguration;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan(value="com.lihongkun.rebatis.test.mapper",factoryBean=RebatisMapperFactoryBean.class)
+@MapperScan(value="com.lihongkun.rebatis.test.mapper")
 public class RebatisConfs {
 
 	@Bean(initMethod="init")
@@ -40,9 +38,10 @@ public class RebatisConfs {
 	
 	@Bean
 	public SqlSessionFactory sqlSessionFactory() throws Exception{
+		
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource());
-		sqlSessionFactory.setPlugins(new Interceptor[]{new ShowSqlInterceptor()});
+		sqlSessionFactory.setConfiguration(new RebatisConfiguration(true, true, true));
 		
 		return sqlSessionFactory.getObject();
 	}

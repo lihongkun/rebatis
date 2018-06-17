@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.lihongkun.rebatis.pagination.Pagination;
+import com.lihongkun.rebatis.pagination.Paginator;
 import com.lihongkun.rebatis.test.domain.Category;
 import com.lihongkun.rebatis.test.mapper.CategoryMapper;
 
@@ -58,9 +59,12 @@ public class RebatisTest {
 	
 	@Test
 	public void testFindAll(){
-		List<Category> catList = categoryMapper.findAll(new Category(), new RowBounds(0, 10));
+		Category category = new Category();
+		category.setType(1);
+		
+		Pagination<Category> catList = categoryMapper.findAll(category, new Paginator(0, 2,true));
 		LOGGER.info("testFindAll");
-		for(Category cat : catList){
+		for(Category cat : catList.getItems()){
 			LOGGER.info("{}",cat);
 		}
 	}

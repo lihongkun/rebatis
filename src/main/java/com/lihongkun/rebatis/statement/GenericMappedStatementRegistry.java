@@ -20,7 +20,7 @@ import org.apache.ibatis.scripting.xmltags.TrimSqlNode;
 import org.apache.ibatis.scripting.xmltags.WhereSqlNode;
 import org.apache.ibatis.session.Configuration;
 
-import com.lihongkun.rebatis.util.StringUtils;
+import com.lihongkun.rebatis.util.StringUtil;
 
 /**
  * 通用SQL注册器
@@ -64,7 +64,7 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	 * @return 对应的数据库字段名称
 	 */
 	protected String getColumnNameByField(Field field){
-		return StringUtils.camelToUnderScore(field.getName());
+		return StringUtil.camelToUnderScore(field.getName());
 	}
 	
 	/**

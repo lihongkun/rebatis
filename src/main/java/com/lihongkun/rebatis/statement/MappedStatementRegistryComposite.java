@@ -25,7 +25,7 @@ import com.lihongkun.rebatis.statement.registry.FindAllRegistry;
 import com.lihongkun.rebatis.statement.registry.FindByIdRegistry;
 import com.lihongkun.rebatis.statement.registry.InsertRegistry;
 import com.lihongkun.rebatis.statement.registry.UpdateByIdRegisty;
-import com.lihongkun.rebatis.util.StringUtils;
+import com.lihongkun.rebatis.util.StringUtil;
 
 /**
  * SQL注册器聚合
@@ -62,12 +62,12 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 		assistant.setCurrentNamespace(namespace);
 		
 		if(org.apache.commons.lang3.StringUtils.isEmpty(table.value())){
-			this.tableName = StringUtils.camelToUnderScore(entityClass.getSimpleName());
+			this.tableName = StringUtil.camelToUnderScore(entityClass.getSimpleName());
 		}else {
 			this.tableName = table.value();
 		}
 		
-		this.idField = com.lihongkun.rebatis.util.ReflectionUtils.findFieldWithAnnoation(entityClass, Id.class);
+		this.idField = com.lihongkun.rebatis.util.ReflectionUtil.findFieldWithAnnoation(entityClass, Id.class);
 		
 		ReflectionUtils.doWithFields(entityClass, new FieldCallback() {
 			public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
