@@ -1,5 +1,7 @@
 package com.lihongkun.rebatis.util;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -27,9 +29,12 @@ public class StringUtil {
 		StringBuffer resultText = new StringBuffer();
 
 		String[] splitText = StringUtils.split(text, repl);
-
+		if(text.startsWith(repl)){
+			splitText = ArrayUtils.insert(0, splitText, StringUtils.EMPTY);
+		}
+		
 		if (text.endsWith(repl)) {
-			splitText = (String[]) ArrayUtils.addAll(splitText, new String[] {""});
+			splitText = ArrayUtils.add(splitText, StringUtils.EMPTY);
 		}
 
 		for (int i = 0; i < splitText.length; ++i) {

@@ -17,15 +17,27 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import com.lihongkun.rebatis.pagination.PageHelper;
 import com.lihongkun.rebatis.pagination.RebatisRowBounds;
+import com.lihongkun.rebatis.pagination.SqlMode;
 
 @Intercepts({ @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 		RowBounds.class, ResultHandler.class }) })
 public class OffsetLimitInterceptor implements Interceptor {
+	
 	private static int MAPPED_STATEMENT_INDEX = 0;
 	private static int PARAMETER_INDEX = 1;
 	private static int ROWBOUNDS_INDEX = 2;
-	private static String LIMIT_CLAUSE = " limit %s,%s";
+	
+	private SqlMode sqlMode;
+	
+	public OffsetLimitInterceptor(){
+		this.sqlMode = SqlMode.DEFAULT;
+	}
+	
+	public OffsetLimitInterceptor(SqlMode sqlMode){
+		this.sqlMode = sqlMode;
+	}
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -48,7 +60,7 @@ public class OffsetLimitInterceptor implements Interceptor {
 
 		final BoundSql boundSql = ms.getBoundSql(parameter);
 
-		String sql = boundSql.getSql() + String.format(LIMIT_CLAUSE, rebatisRowBounds.getOffset(),rebatisRowBounds.getLimit());
+		String sql = PageHelper.getPageSql(boundSql.getSql(), rebatisRowBounds, sqlMode);
 		BoundSql paginationBoundSql = paginationBoundSql(ms, boundSql, sql, boundSql.getParameterMappings(), parameter);
 		
 		MappedStatement paginationMappedStatement = paginationMappedStatement(ms, new BoundSqlSqlSource(paginationBoundSql));

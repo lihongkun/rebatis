@@ -14,12 +14,14 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.ParameterMode;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import com.lihongkun.rebatis.proxy.RebatisMapperMethod.SqlCommand;
+import com.lihongkun.rebatis.util.StringUtil;
 
 /**
  * 分页帮助类
@@ -27,6 +29,12 @@ import com.lihongkun.rebatis.proxy.RebatisMapperMethod.SqlCommand;
  */
 public class PageHelper {
 
+	private static String MYSQL_PAGE_SQL = "{} limit {},{}";
+	
+	private static String ORACLE_PAGE_SQL = "select * from ( select row_.*, rownum rownum_ from ({}) row_ ) where rownum_ <= {} and rownum_ > {} ) where rownum <= {}";
+	
+	private static String POSTGRE_PAGE_SQL = "{} limit {} offset {}";
+	
 	/**
 	 * 提取分页参数
 	 * @param args	全部参数
@@ -133,4 +141,19 @@ public class PageHelper {
 		}
 	}
 	
+	public static String getPageSql(String sql,RowBounds rowBounds,SqlMode sqlMode){
+		
+		if(sqlMode == SqlMode.DEFAULT || sqlMode == SqlMode.MYSQL){
+			return StringUtil.replace(MYSQL_PAGE_SQL, "{}", new Object[]{sql,rowBounds.getOffset(),rowBounds.getLimit()});
+		}
+		else if(sqlMode == SqlMode.ORACLE){
+			return StringUtil.replace(ORACLE_PAGE_SQL, "{}", new Object[]{sql,rowBounds.getLimit(),rowBounds.getOffset()});
+		}
+		else if(sqlMode == SqlMode.POSTGRE){
+			return StringUtil.replace(POSTGRE_PAGE_SQL, "{}", new Object[]{sql,rowBounds.getLimit()+rowBounds.getOffset(),rowBounds.getOffset(),rowBounds.getLimit()});
+		}
+		else {
+			throw new BindingException("only mysql,oracle,postgre be supported !");
+		}
+	}
 }
