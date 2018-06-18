@@ -79,6 +79,10 @@ import org.apache.ibatis.type.UnknownTypeHandler;
 
 import com.lihongkun.rebatis.pagination.Pagination;
 
+/**
+ * 注解 MappedStatement 创建类
+ * @author lihongkun
+ */
 public class RebatisMapperAnnotationBuilder extends MapperAnnotationBuilder {
 
 	private final Set<Class<? extends Annotation>> sqlAnnotationTypes = new HashSet<Class<? extends Annotation>>();

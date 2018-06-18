@@ -1,7 +1,5 @@
 package com.lihongkun.rebatis.util;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 

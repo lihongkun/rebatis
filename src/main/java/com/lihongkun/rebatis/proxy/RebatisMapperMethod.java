@@ -328,6 +328,7 @@ public class RebatisMapperMethod {
 			return resultHandlerIndex != null;
 		}
 
+		@SuppressWarnings("rawtypes")
 		public ResultHandler extractResultHandler(Object[] args) {
 			return hasResultHandler() ? (ResultHandler) args[resultHandlerIndex] : null;
 		}
