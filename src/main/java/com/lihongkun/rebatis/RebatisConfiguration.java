@@ -1,22 +1,28 @@
-package com.lihongkun.rebatis.proxy;
+package com.lihongkun.rebatis;
 
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 
 import com.lihongkun.rebatis.interceptor.OffsetLimitInterceptor;
 import com.lihongkun.rebatis.interceptor.ShowSqlInterceptor;
+import com.lihongkun.rebatis.pagination.SqlMode;
+import com.lihongkun.rebatis.proxy.RebatisMapperRegistry;
 
 public class RebatisConfiguration extends Configuration {
 
 	protected RebatisMapperRegistry rebatisMapperRegistry;
 	
 	public RebatisConfiguration(boolean enablePagination,boolean enableRegistStatement,boolean enableShowSql){
+		this(enablePagination,enableRegistStatement,enableShowSql,SqlMode.DEFAULT);
+	}
+	
+	public RebatisConfiguration(boolean enablePagination,boolean enableRegistStatement,boolean enableShowSql,SqlMode sqlMode){
 		super();
 		rebatisMapperRegistry = new RebatisMapperRegistry(this,enableRegistStatement);
 		if(enableShowSql)
 			this.addInterceptor(new ShowSqlInterceptor());
 		if(enablePagination || enableRegistStatement){
-			this.addInterceptor(new OffsetLimitInterceptor());
+			this.addInterceptor(new OffsetLimitInterceptor(sqlMode));
 		}
 	}
 

@@ -151,7 +151,7 @@ public class RebatisMapperMethod {
 		Object[] parameters = ArrayUtils.removeElement(args, paginator);
 		
 		//构造查询参数
-		Object param = method.convertPaginationArgsToSqlCommandParam(parameters);
+		Object param = method.convertArgsToSqlCommandParam(parameters);
 		
 		Pagination<E> result = new Pagination<>();
 		result.setContainTotal(paginator.isContainTotal());
@@ -315,29 +315,6 @@ public class RebatisMapperMethod {
 				return param;
 			}
 		}
-		
-		public Object convertPaginationArgsToSqlCommandParam(Object[] args) {
-			final int paramCount = params.size()-1;
-			if (args == null || paramCount == 0) {
-				return null;
-			} else if (!hasNamedParameters && paramCount == 1) {
-				return args[params.keySet().iterator().next().intValue()];
-			} else {
-				final Map<String, Object> param = new ParamMap<Object>();
-				int i = 0;
-				for (Map.Entry<Integer, String> entry : params.entrySet()) {
-					param.put(entry.getValue(), args[entry.getKey().intValue()]);
-					// issue #71, add param names as param1, param2...but ensure
-					// backward compatibility
-					final String genericParamName = "param" + String.valueOf(i + 1);
-					if (!param.containsKey(genericParamName)) {
-						param.put(genericParamName, args[entry.getKey()]);
-					}
-					i++;
-				}
-				return param;
-			}
-		}
 
 		public boolean hasRowBounds() {
 			return rowBoundsIndex != null;
@@ -410,7 +387,7 @@ public class RebatisMapperMethod {
 			final SortedMap<Integer, String> params = new TreeMap<Integer, String>();
 			final Class<?>[] argTypes = method.getParameterTypes();
 			for (int i = 0; i < argTypes.length; i++) {
-				if (!RowBounds.class.isAssignableFrom(argTypes[i])
+				if (!Paginator.class.isAssignableFrom(argTypes[i])&&!RowBounds.class.isAssignableFrom(argTypes[i])
 						&& !ResultHandler.class.isAssignableFrom(argTypes[i])) {
 					String paramName = String.valueOf(params.size());
 					if (hasNamedParameters) {

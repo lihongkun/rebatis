@@ -16,7 +16,7 @@ import com.lihongkun.rebatis.RebatisConfiguration;
 @Configuration
 @EnableTransactionManagement
 @MapperScan(value="com.lihongkun.rebatis.test.mapper")
-public class RebatisConfs {
+public class PaginationConfs {
 
 	@Bean(initMethod="init")
 	public DataSource dataSource(){
@@ -41,9 +41,8 @@ public class RebatisConfs {
 		
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dataSource());
-		sqlSessionFactory.setConfiguration(new RebatisConfiguration(true, true, true));
+		sqlSessionFactory.setConfiguration(new RebatisConfiguration(true, false, true));
 		
 		return sqlSessionFactory.getObject();
 	}
-	
 }

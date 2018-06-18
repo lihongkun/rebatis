@@ -57,7 +57,7 @@ public class RebatisMapperRegistry {
 				// run
 				// otherwise the binding may automatically be attempted by the
 				// mapper parser. If the type is already known, it won't try.
-				MapperAnnotationBuilder parser = new MapperAnnotationBuilder(config, type);
+				MapperAnnotationBuilder parser = new RebatisMapperAnnotationBuilder(config, type);
 				parser.parse();
 				loadCompleted = true;
 				

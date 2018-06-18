@@ -47,12 +47,9 @@ public class ShowSqlInterceptor implements Interceptor {
 		Object returnValue = null;
 		long start = System.currentTimeMillis();
 		returnValue = invocation.proceed();
-		long end = System.currentTimeMillis();
-		long time = (end - start);
-		if (time > 1) {
-			String sql = getSql(configuration, boundSql, sqlId, time);
-			LOGGER.info(sql);
-		}
+		long time = (System.currentTimeMillis() - start);
+		String sql = getSql(configuration, boundSql, sqlId, time);
+		LOGGER.info(sql);
 		return returnValue;
 	}
 
