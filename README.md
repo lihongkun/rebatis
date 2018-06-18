@@ -104,5 +104,6 @@ public class MybatisConfiguration {
 
 QQ群：477318923
 
-公众号
+公众号 
+
 ![image](http://www.lihongkun.com/qrcode_for_gh_7e64b0d0bc1e_258.jpg)
