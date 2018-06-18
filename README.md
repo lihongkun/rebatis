@@ -1,10 +1,10 @@
 ## 功能简介
 
-分页和SQL打印功能可以各种单独使用,如果使用通用SQL注册功能,将同时开启分页功能
+提供通用SQL注册、分页、SQL打印功能,可以单独使用.如果使用通用SQL注册,将同时开启分页功能.
 
 #### 通用SQL注册
 
-基础的SQL不用在手动写,增加工程效率
+基础的SQL不用再手工写,增加工程效率
 
 - 类似JPA(Hibernate),使用实体注解.
 - 实现通用的Mapper接口及其SQL注册,无代码生成.
@@ -99,3 +99,10 @@ public class MybatisConfiguration {
 ## 原理
 
 主要扩展了Configuration,在注册Mapper的时候同时对BaseMapper中已定义的接口进行对应的MapperStatement的注册达到了不用自己手写SQL的目的.
+
+## 联系方式
+
+QQ群：477318923
+
+公众号
+![image](http://www.lihongkun.com/qrcode_for_gh_7e64b0d0bc1e_258.jpg)
