@@ -74,16 +74,10 @@ public class RebatisMapperRegistry {
 		}
 	}
 
-	/**
-	 * @since 3.2.2
-	 */
 	public Collection<Class<?>> getMappers() {
 		return Collections.unmodifiableCollection(knownMappers.keySet());
 	}
 
-	/**
-	 * @since 3.2.2
-	 */
 	public void addMappers(String packageName, Class<?> superType) {
 		ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<Class<?>>();
 		resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
@@ -93,9 +87,6 @@ public class RebatisMapperRegistry {
 		}
 	}
 
-	/**
-	 * @since 3.2.2
-	 */
 	public void addMappers(String packageName) {
 		addMappers(packageName, Object.class);
 	}

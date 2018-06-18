@@ -60,10 +60,10 @@ public class PageHelper {
 	
 	/**
 	 * 查询数据总数
-	 * @param sqlSession
-	 * @param command
-	 * @param param
-	 * @return
+	 * @param sqlSession		Mybatis SqlSession
+	 * @param command			Mybatis SqlCommand {@link SqlCommand}
+	 * @param param				Mybatis MappedStatement parameterObject
+	 * @return					对应SQL查询出的数据总数
 	 */
 	public static Long getTotalCnt(SqlSession sqlSession,SqlCommand command,Object param){
 		Long total = 0L;

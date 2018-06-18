@@ -36,7 +36,7 @@ public interface BaseMapper<T,ID>  {
 	/**
 	 * 查询
 	 * @param entity	查询条件	
-	 * @param rowBounds 分页参数
+	 * @param paginator 分页参数
 	 * @return			查询结果实体类列表
 	 */
 	Pagination<T> findAll(T entity,Paginator paginator);
