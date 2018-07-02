@@ -68,25 +68,33 @@ public class PageHelper {
 	public static Long getTotalCnt(SqlSession sqlSession,SqlCommand command,Object param){
 		Long total = 0L;
 		Configuration configuration = sqlSession.getConfiguration();
+		Connection connection = null;
+		PreparedStatement countStmt = null;
 		try {
-			PreparedStatement countStmt = getCountStatement(configuration, command, param);
+			connection = configuration.getEnvironment().getDataSource().getConnection();
+			countStmt = getCountStatement(configuration,connection, command, param);
 			
 			ResultSet rs = countStmt.executeQuery();
 			if(rs.next())
 				total = rs.getLong(1);
 			
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new BindingException(e);
 		}
+		finally {
+			closeQuietly(countStmt);
+			closeQuietly(connection);
+		}
+		
 		return total;
 	}
 	
-	private static PreparedStatement getCountStatement(Configuration configuration,SqlCommand command,Object param) throws SQLException{
+	private static PreparedStatement getCountStatement(Configuration configuration,Connection connection,SqlCommand command,Object param) throws SQLException{
 		MappedStatement mappedStatement = configuration.getMappedStatement(command.getName(), false);
 		BoundSql boundSql = mappedStatement.getBoundSql(param);
 		
 		String countSql = "select count(1) from ("+boundSql.getSql()+") count_tmp";
-		Connection connection = configuration.getEnvironment().getDataSource().getConnection();
 		PreparedStatement countStmt = connection.prepareStatement(countSql);
 		
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
@@ -154,6 +162,16 @@ public class PageHelper {
 		}
 		else {
 			throw new BindingException("only mysql,oracle,postgre be supported !");
+		}
+	}
+	
+	private static final void closeQuietly(AutoCloseable closeable){
+		try{
+			if(closeable != null){
+				closeable.close();
+			}
+		}
+		catch (Exception e) {
 		}
 	}
 }

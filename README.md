@@ -102,8 +102,8 @@ public class MybatisConfiguration {
 
 ## 联系方式
 
-QQ群：477318923
+QQ群 : 477318923
 
-微信公众号 
+微信公众号 : HelloBackend
 
 ![image](http://www.lihongkun.com/qrcode_for_gh_7e64b0d0bc1e_258.jpg)
