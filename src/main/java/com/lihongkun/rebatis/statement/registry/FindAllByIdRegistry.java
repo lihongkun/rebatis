@@ -35,14 +35,17 @@ public class FindAllByIdRegistry extends GenericMappedStatementRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace+".findAllById";
 	}
 
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.SELECT;
 	}
 
+	@Override
 	public SqlSource getSqlSource() {
 		
 		StringBuffer sql = new StringBuffer();
@@ -67,11 +70,13 @@ public class FindAllByIdRegistry extends GenericMappedStatementRegistry {
 		return new DynamicSqlSource(configuration, new MixedSqlNode(contents));
 	}
 
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		return new NoKeyGenerator();
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return entityClass;
 	}
 }

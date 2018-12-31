@@ -28,7 +28,8 @@ import com.lihongkun.rebatis.statement.registry.UpdateByIdRegisty;
 import com.lihongkun.rebatis.util.StringUtil;
 
 /**
- * SQL注册器聚合
+ * MappedStatementRegistry Composite .
+ * All Registry in one and call registerMappedStatement to register entity's mapped statement
  * @author lihongkun
  */
 public class MappedStatementRegistryComposite implements MappedStatementRegistry {
@@ -45,9 +46,9 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 	
 	private Field idField;
 	
-	private List<Field> columnFields = new ArrayList<Field>();
+	private List<Field> columnFields = new ArrayList<>();
 	
-	private List<MappedStatementRegistry> mappedStatementRegistrys;
+	private List<MappedStatementRegistry> mappedStatementRegisters;
 	
 	public MappedStatementRegistryComposite(Configuration configuration,String namespace,Class<?> entityClass){
 		this.configuration = configuration;
@@ -70,10 +71,12 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 		this.idField = com.lihongkun.rebatis.util.ReflectionUtil.findFieldWithAnnoation(entityClass, Id.class);
 		
 		ReflectionUtils.doWithFields(entityClass, new FieldCallback() {
-			public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
+			@Override
+			public void doWith(Field field) throws IllegalArgumentException {
 				columnFields.add(field);
 			}
 		},new FieldFilter() {
+			@Override
 			public boolean matches(Field field) {
 				
 				if(Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())) {
@@ -91,10 +94,10 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 			}
 		});
 		
-		mappedStatementRegistrys = getDefaultMappedStatementRegistrys();
+		mappedStatementRegisters = getDefaultMappedStatementRegisters();
 	}
 	
-	private List<MappedStatementRegistry> getDefaultMappedStatementRegistrys(){
+	private List<MappedStatementRegistry> getDefaultMappedStatementRegisters(){
 		
 		RegistryArgs registryArgs = buildRegistryArgs();
 		
@@ -128,9 +131,10 @@ public class MappedStatementRegistryComposite implements MappedStatementRegistry
 		return args;
 	}
 
+	@Override
 	public void registerMappedStatement() {
-		for(MappedStatementRegistry resistry:mappedStatementRegistrys){
-			resistry.registerMappedStatement();
+		for(MappedStatementRegistry registry: mappedStatementRegisters){
+			registry.registerMappedStatement();
 		}
 	}
 	

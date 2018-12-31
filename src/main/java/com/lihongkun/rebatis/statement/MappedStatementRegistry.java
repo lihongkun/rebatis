@@ -1,9 +1,13 @@
 package com.lihongkun.rebatis.statement;
 
 /**
- * SQL注册器
+ * mapped statement registry interface
  * @author lihongkun
  */
 public interface MappedStatementRegistry {
-	public void registerMappedStatement();
+
+	/**
+	 * register entity's mapped statement
+	 */
+	void registerMappedStatement() ;
 }

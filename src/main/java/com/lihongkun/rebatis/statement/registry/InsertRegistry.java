@@ -34,11 +34,13 @@ public class InsertRegistry extends GenericInsertRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace + ".insert";
 	}
 
-	public SqlSource getSqlSource() {
+	@Override
+    public SqlSource getSqlSource() {
 		
 		List<SqlNode> contents = new ArrayList<SqlNode>();
 		contents.add(new TextSqlNode("insert into " + tableName + " "));

@@ -85,19 +85,21 @@ import com.lihongkun.rebatis.pagination.Pagination;
  */
 public class RebatisMapperAnnotationBuilder extends MapperAnnotationBuilder {
 
-	private final Set<Class<? extends Annotation>> sqlAnnotationTypes = new HashSet<Class<? extends Annotation>>();
-	private final Set<Class<? extends Annotation>> sqlProviderAnnotationTypes = new HashSet<Class<? extends Annotation>>();
+	private final Set<Class<? extends Annotation>> sqlAnnotationTypes;
+	private final Set<Class<? extends Annotation>> sqlProviderAnnotationTypes;
 
 	private Configuration configuration;
 	private MapperBuilderAssistant assistant;
 	private Class<?> type;
 
-	public RebatisMapperAnnotationBuilder(Configuration configuration, Class<?> type) {
+	RebatisMapperAnnotationBuilder(Configuration configuration, Class<?> type) {
 		super(configuration, type);
 		String resource = type.getName().replace('.', '/') + ".java (best guess)";
 	    this.assistant = new MapperBuilderAssistant(configuration, resource);
 	    this.configuration = configuration;
 	    this.type = type;
+		this.sqlAnnotationTypes = new HashSet<>();
+		this.sqlProviderAnnotationTypes = new HashSet<>();
 
 	    sqlAnnotationTypes.add(Select.class);
 	    sqlAnnotationTypes.add(Insert.class);
@@ -110,6 +112,7 @@ public class RebatisMapperAnnotationBuilder extends MapperAnnotationBuilder {
 	    sqlProviderAnnotationTypes.add(DeleteProvider.class);
 	}
 
+	@Override
 	public void parse() {
 		String resource = type.toString();
 		if (!configuration.isResourceLoaded(resource)) {
@@ -268,7 +271,7 @@ public class RebatisMapperAnnotationBuilder extends MapperAnnotationBuilder {
 			Class<? extends TypeHandler<?>> typeHandler = (Class<? extends TypeHandler<?>>) (discriminator
 					.typeHandler() == UnknownTypeHandler.class ? null : discriminator.typeHandler());
 			Case[] cases = discriminator.cases();
-			Map<String, String> discriminatorMap = new HashMap<String, String>();
+			Map<String, String> discriminatorMap = new HashMap<>();
 			for (Case c : cases) {
 				String value = c.value();
 				String caseResultMapId = resultMapId + "-" + value;

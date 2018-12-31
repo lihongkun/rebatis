@@ -2,6 +2,9 @@ package com.lihongkun.rebatis.pagination;
 
 import java.io.Serializable;
 
+/**
+ * @author lihongkun
+ */
 public class Paginator implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

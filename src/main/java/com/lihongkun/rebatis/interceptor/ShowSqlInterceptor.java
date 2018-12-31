@@ -27,7 +27,10 @@ import org.slf4j.LoggerFactory;
 
 import com.lihongkun.rebatis.util.StringUtil;
 
-@Intercepts({ 
+/**
+ * @author lihongkun
+ */
+@Intercepts({
 	@Signature(method = "update", type = Executor.class, args = { MappedStatement.class, Object.class }),
 	@Signature(method = "query", type = Executor.class, args = { MappedStatement.class, Object.class,RowBounds.class, ResultHandler.class })
 })
@@ -35,6 +38,7 @@ public class ShowSqlInterceptor implements Interceptor {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShowSqlInterceptor.class);
 
+	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 		Object parameter = null;
@@ -44,7 +48,7 @@ public class ShowSqlInterceptor implements Interceptor {
 		String sqlId = mappedStatement.getId();
 		BoundSql boundSql = mappedStatement.getBoundSql(parameter);
 		Configuration configuration = mappedStatement.getConfiguration();
-		Object returnValue = null;
+		Object returnValue;
 		long start = System.currentTimeMillis();
 		returnValue = invocation.proceed();
 		long time = (System.currentTimeMillis() - start);
@@ -53,20 +57,18 @@ public class ShowSqlInterceptor implements Interceptor {
 		return returnValue;
 	}
 
-	public static String getSql(Configuration configuration, BoundSql boundSql, String sqlId, long time) {
+	private static String getSql(Configuration configuration, BoundSql boundSql, String sqlId, long time) {
 		String sql = showSql(configuration, boundSql);
-		StringBuilder str = new StringBuilder(100);
-		str.append(sqlId);
-		str.append("[");
-		str.append(sql);
-		str.append("][");
-		str.append(time);
-		str.append("ms]");
-		return str.toString();
+		return sqlId +
+				"[" +
+				sql +
+				"][" +
+				time +
+				"ms]";
 	}
 
 	private static String getParameterValue(Object obj) {
-		String value = null;
+		String value;
 		if (obj instanceof String) {
 			value = "'" + obj.toString() + "'";
 		} else if (obj instanceof Date) {
@@ -83,7 +85,7 @@ public class ShowSqlInterceptor implements Interceptor {
 		return value;
 	}
 
-	public static String showSql(Configuration configuration, BoundSql boundSql) {
+	private static String showSql(Configuration configuration, BoundSql boundSql) {
 		Object parameterObject = boundSql.getParameterObject();
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
 		String sql = StringUtils.replaceAll(boundSql.getSql(), "[\\s]+", " ");
@@ -116,10 +118,12 @@ public class ShowSqlInterceptor implements Interceptor {
 		return sql;
 	}
 
+	@Override
 	public Object plugin(Object target) {
 		return Plugin.wrap(target, this);
 	}
 
+	@Override
 	public void setProperties(Properties properties) {
 	}
 

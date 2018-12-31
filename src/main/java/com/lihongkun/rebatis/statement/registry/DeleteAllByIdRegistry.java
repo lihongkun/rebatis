@@ -34,14 +34,17 @@ public class DeleteAllByIdRegistry extends GenericMappedStatementRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace+".deleteAllById";
 	}
 
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.DELETE;
 	}
 	
+	@Override
 	public SqlSource getSqlSource() {
 		
 		List<SqlNode> contents = new ArrayList<>();
@@ -56,11 +59,13 @@ public class DeleteAllByIdRegistry extends GenericMappedStatementRegistry {
 		return new DynamicSqlSource(configuration, new MixedSqlNode(contents));
 	}
 	
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		return new NoKeyGenerator();
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return Integer.class;
 	}
 }

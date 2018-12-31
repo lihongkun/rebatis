@@ -34,14 +34,17 @@ public class CountRegistry extends GenericMappedStatementRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace + ".count";
 	}
 
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.SELECT;
 	}
 
+	@Override
 	public SqlSource getSqlSource() {
 		
 		List<SqlNode> contents = new ArrayList<SqlNode>();
@@ -51,11 +54,13 @@ public class CountRegistry extends GenericMappedStatementRegistry {
 		return new DynamicSqlSource(configuration, new MixedSqlNode(contents));
 	}
 
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		return new NoKeyGenerator();
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return Long.class;
 	}
 }

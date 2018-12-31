@@ -17,6 +17,7 @@ public abstract class GenericInsertRegistry extends GenericMappedStatementRegist
 		super(args);
 	}
 	
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		//默认使用SelectKey
 		String keyStatementId = getStatementId() + SelectKeyGenerator.SELECT_KEY_SUFFIX;
@@ -34,10 +35,12 @@ public abstract class GenericInsertRegistry extends GenericMappedStatementRegist
 		}
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return int.class;
 	}
 	
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.INSERT;
 	}

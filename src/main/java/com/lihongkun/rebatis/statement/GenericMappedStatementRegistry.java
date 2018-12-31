@@ -191,7 +191,8 @@ public abstract class GenericMappedStatementRegistry implements MappedStatementR
 	/**
 	 * 注册SQL
 	 */
-	public void registerMappedStatement() {
+	@Override
+    public void registerMappedStatement() {
 		
 		Integer fetchSize = null;
 		String parameterMap = null;

@@ -23,14 +23,17 @@ public class ExistsByIdRegistry extends GenericMappedStatementRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace+".existsById";
 	}
 
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.SELECT;
 	}
 
+	@Override
 	public SqlSource getSqlSource() {
 		StringBuffer sql = new StringBuffer();
 		
@@ -40,11 +43,13 @@ public class ExistsByIdRegistry extends GenericMappedStatementRegistry {
 		return new DynamicSqlSource(configuration, new TextSqlNode(sql.toString()));
 	}
 
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		return new NoKeyGenerator();
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return Boolean.class;
 	}
 }

@@ -30,7 +30,7 @@ import com.lihongkun.rebatis.util.StringUtil;
 public class PageHelper {
 
 	private static String MYSQL_PAGE_SQL = "{} limit {},{}";
-	
+
 	private static String ORACLE_PAGE_SQL = "select * from ( select row_.*, rownum rownum_ from ({}) row_ ) where rownum_ <= {} and rownum_ > {} ) where rownum <= {}";
 	
 	private static String POSTGRE_PAGE_SQL = "{} limit {} offset {}";
@@ -66,7 +66,7 @@ public class PageHelper {
 	 * @return					对应SQL查询出的数据总数
 	 */
 	public static Long getTotalCnt(SqlSession sqlSession,SqlCommand command,Object param){
-		Long total = 0L;
+		long total = 0L;
 		Configuration configuration = sqlSession.getConfiguration();
 		Connection connection = null;
 		PreparedStatement countStmt = null;
@@ -75,8 +75,9 @@ public class PageHelper {
 			countStmt = getCountStatement(configuration,connection, command, param);
 			
 			ResultSet rs = countStmt.executeQuery();
-			if(rs.next())
+			if(rs.next()) {
 				total = rs.getLong(1);
+			}
 			
 		}
 		catch (SQLException e) {
@@ -124,8 +125,9 @@ public class PageHelper {
 
 	private static JdbcType getJdbcType(Configuration configuration, ParameterMapping parameterMapping, Object value) {
 		JdbcType jdbcType = parameterMapping.getJdbcType();
-		if (value == null && jdbcType == null) 
+		if (value == null && jdbcType == null) {
 			jdbcType = configuration.getJdbcTypeForNull();
+		}
 		return jdbcType;
 	}
 
@@ -165,13 +167,13 @@ public class PageHelper {
 		}
 	}
 	
-	private static final void closeQuietly(AutoCloseable closeable){
+	private static void closeQuietly(AutoCloseable closeable){
 		try{
 			if(closeable != null){
 				closeable.close();
 			}
 		}
-		catch (Exception e) {
+		catch (Exception ignored) {
 		}
 	}
 }

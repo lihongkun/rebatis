@@ -16,16 +16,20 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.lihongkun.rebatis.statement.MappedStatementRegistryComposite;
 
+/**
+ * @author lihongkun
+ */
 public class RebatisMapperRegistry {
 
 	private final Configuration config;
-	private final Map<Class<?>, RebatisMapperProxyFactory<?>> knownMappers = new HashMap<Class<?>, RebatisMapperProxyFactory<?>>();
+	private final Map<Class<?>, RebatisMapperProxyFactory<?>> knownMappers;
 
-	private boolean enableRegistStatement;
+	private boolean enableRegisterStatement;
 	
-	public RebatisMapperRegistry(Configuration config,boolean enableRegistStatement) {
+	public RebatisMapperRegistry(Configuration config,boolean enableRegisterStatement) {
 	    this.config = config;
-	    this.enableRegistStatement = enableRegistStatement;
+	    this.enableRegisterStatement = enableRegisterStatement;
+	    this.knownMappers = new HashMap<>();
 	  }
 
 	@SuppressWarnings("unchecked")
@@ -52,7 +56,7 @@ public class RebatisMapperRegistry {
 			}
 			boolean loadCompleted = false;
 			try {
-				knownMappers.put(type, new RebatisMapperProxyFactory<T>(type));
+				knownMappers.put(type, new RebatisMapperProxyFactory<>(type));
 				// It's important that the type is added before the parser is
 				// run
 				// otherwise the binding may automatically be attempted by the
@@ -62,7 +66,7 @@ public class RebatisMapperRegistry {
 				loadCompleted = true;
 				
 				// 注册基础SQL
-				if(this.enableRegistStatement){
+				if(this.enableRegisterStatement){
 					new MappedStatementRegistryComposite(this.config, type.getName(), getEntityClass(type)).registerMappedStatement();
 				}
 				
@@ -79,7 +83,7 @@ public class RebatisMapperRegistry {
 	}
 
 	public void addMappers(String packageName, Class<?> superType) {
-		ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<Class<?>>();
+		ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
 		resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
 		Set<Class<? extends Class<?>>> mapperSet = resolverUtil.getClasses();
 		for (Class<?> mapperClass : mapperSet) {

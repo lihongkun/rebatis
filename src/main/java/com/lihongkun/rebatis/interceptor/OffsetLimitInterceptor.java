@@ -3,6 +3,7 @@ package com.lihongkun.rebatis.interceptor;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -21,10 +22,13 @@ import com.lihongkun.rebatis.pagination.PageHelper;
 import com.lihongkun.rebatis.pagination.RebatisRowBounds;
 import com.lihongkun.rebatis.pagination.SqlMode;
 
+/**
+ * @author lihongkun
+ */
 @Intercepts({ @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class,
 		RowBounds.class, ResultHandler.class }) })
 public class OffsetLimitInterceptor implements Interceptor {
-	
+
 	private static int MAPPED_STATEMENT_INDEX = 0;
 	private static int PARAMETER_INDEX = 1;
 	private static int ROWBOUNDS_INDEX = 2;
@@ -83,7 +87,9 @@ public class OffsetLimitInterceptor implements Interceptor {
 		return newBoundSql;
 	}
 
-	// see: MapperBuilderAssistant
+	/**
+	 * see: MapperBuilderAssistant
+	 */
 	private MappedStatement paginationMappedStatement(MappedStatement ms, SqlSource newSqlSource) {
 		Builder builder = new Builder(ms.getConfiguration(), ms.getId(), newSqlSource, ms.getSqlCommandType());
 
@@ -113,9 +119,10 @@ public class OffsetLimitInterceptor implements Interceptor {
 	
 	public static class BoundSqlSqlSource implements SqlSource {
 		BoundSql boundSql;
-		public BoundSqlSqlSource(BoundSql boundSql) {
+		BoundSqlSqlSource(BoundSql boundSql) {
 			this.boundSql = boundSql;
 		}
+		@Override
 		public BoundSql getBoundSql(Object parameterObject) {
 			return boundSql;
 		}

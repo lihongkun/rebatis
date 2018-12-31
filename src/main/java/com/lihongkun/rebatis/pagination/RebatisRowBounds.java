@@ -2,6 +2,9 @@ package com.lihongkun.rebatis.pagination;
 
 import org.apache.ibatis.session.RowBounds;
 
+/**
+ * @author lihongkun
+ */
 public class RebatisRowBounds extends RowBounds{
 
 	private int offset;

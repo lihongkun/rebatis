@@ -7,14 +7,45 @@ import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.session.Configuration;
 
 
+/**
+ * Statement registry  arguments
+ * @author lihongkun
+ */
 public class RegistryArgs {
-	
+
+	/**
+	 * Mybatis Configuration
+	 */
 	private Configuration configuration;
+
+	/**
+	 * Mybatis Mapper registry assistant
+	 */
 	private MapperBuilderAssistant assistant;
+
+	/**
+	 * Mapped entity
+	 */
 	private Class<?> entityClass;
+
+	/**
+	 * Mapped entity's ID column field
+	 */
 	private Field idField;
+
+	/**
+	 * Mapped entity's other column field except ID column
+	 */
 	private List<Field> columnFields;
+
+	/**
+	 * Mapped entity's database table name
+	 */
 	private String tableName;
+
+	/**
+	 * Mybatis mapper's namespace
+	 */
 	private String namespace;
 	
 	public Configuration getConfiguration() {

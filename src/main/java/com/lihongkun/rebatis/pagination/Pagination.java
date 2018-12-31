@@ -3,6 +3,9 @@ package com.lihongkun.rebatis.pagination;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author lihongkun
+ */
 public class Pagination<T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;

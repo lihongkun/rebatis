@@ -33,14 +33,17 @@ public class UpdateByIdRegisty extends GenericMappedStatementRegistry {
 		super(args);
 	}
 
+	@Override
 	public String getStatementId() {
 		return namespace + ".updateById";
 	}
 
+	@Override
 	public SqlCommandType getSqlCommandType() {
 		return SqlCommandType.INSERT;
 	}
 
+	@Override
 	public SqlSource getSqlSource() {
 		
 		List<SqlNode> contents = new ArrayList<>();
@@ -52,11 +55,13 @@ public class UpdateByIdRegisty extends GenericMappedStatementRegistry {
 		return new DynamicSqlSource(configuration, new MixedSqlNode(contents));
 	}
 
+	@Override
 	public KeyGenerator getKeyGenerator() {
 		return new NoKeyGenerator();
 	}
 
-	public Class<?> getResultType() {
+	@Override
+    public Class<?> getResultType() {
 		return int.class;
 	}
 }
